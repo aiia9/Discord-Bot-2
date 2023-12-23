@@ -1,0 +1,24 @@
+import discord
+from discord.ext import commands
+import random
+import os
+
+# Переменная intents - хранит привилегии бота
+intents = discord.Intents.default()
+# Включаем привелегию на чтение сообщений
+intents.message_content = True
+# Создаем бота в переменной client и передаем все привелегии
+
+bot = commands.Bot(command_prefix='/', intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+
+@bot.event
+async def on_message(message):
+    if message.content.startswith('Как можно помочь окружающей среде?'):
+        await message.channel.send(f'Вот как можно помочь окружающей среде:')
+        randomfacts = ['Экономия воды и электроэнергии', 'Отказ от пластика', 'Сортировка мусора', 'Экономия топлива']
+        await message.channel.send(random.choice(randomfacts))
+bot.run("token")
